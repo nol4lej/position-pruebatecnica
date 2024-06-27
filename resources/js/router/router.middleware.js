@@ -4,7 +4,6 @@ function isAuthenticated() {
 }
 
 export const beforeEachRoute = (to, from, next) => {
-  console.log(to);
   if (to.matched.some(route => route.meta.requiresAuth)) {
 
     if (isAuthenticated()) {

@@ -8,10 +8,10 @@ const vuetify = createVuetify({
     components,
     directives,
     icons: {
-        defaultSet: 'mdi',
-        sets: {
-            mdi,
-        },
+        // defaultSet: 'mdi',
+        // sets: {
+        //     mdi,
+        // },
     },
     theme: {
         dark: false, // Modo oscuro desactivado

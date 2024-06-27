@@ -15,7 +15,7 @@
                     </v-card-title>
 
                     <v-card-text>
-                        <v-form @submit.prevent="login">
+                        <v-form @submit.prevent="login" style="padding: 8px 0;">
                             <v-text-field v-model="email" label="Email" outlined dense required
                                 type="email"></v-text-field>
 
@@ -24,6 +24,11 @@
 
                             <v-btn color="primary" dark block type="submit">Login</v-btn>
                         </v-form>
+
+                        <v-alert v-if="errorMessage" type="error" dismissible>
+                            {{ errorMessage }}
+                        </v-alert>
+
                     </v-card-text>
                 </v-card>
             </v-col>
@@ -32,17 +37,44 @@
 </template>
 
 <script>
+
+import api from '@services/api';
+import { TokenService } from '@services'
+import { router } from '@router';
+import { mapActions } from 'vuex';
+
 export default {
     data() {
         return {
             email: '',
-            password: ''
+            password: '',
+            errorMessage: '',
         };
     },
     methods: {
-        login() {
-            console.log('Email:', this.email);
-            console.log('Password:', this.password);
+        ...mapActions(['loginSuccess']), 
+        async login() {
+            try {
+                const response = await api.post('/auth/login', {
+                    email: this.email,
+                    password: this.password
+                });
+                console.log(response);
+                
+                this.loginSuccess({
+                    userData: response.data.data,
+                    token: response.data.token
+                });
+
+                TokenService.setToken(response.data.token);
+
+                router.push('/');
+
+                console.log("asd");
+
+            } catch (error) {
+                this.errorMessage = error.message || 'Error during login';
+            }
         }
     }
 };

@@ -19,6 +19,8 @@ export default defineConfig({
             '@views': path.resolve(__dirname, './resources/js/views'),
             '@config': path.resolve(__dirname, './resources/js/config'),
             '@services': path.resolve(__dirname, './resources/js/services'),
+            '@utils': path.resolve(__dirname, './resources/js/utils'),
+            '@store': path.resolve(__dirname, './resources/js/store'),
         }
     }
 });

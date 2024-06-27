@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TransactionRequest;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class TransactionController extends Controller
 {
@@ -25,9 +26,11 @@ class TransactionController extends Controller
 
     public function store(TransactionRequest $request)
     {
+        $fecha = Carbon::parse($request->fecha)->format('Y-m-d H:i:s');
+
         $transaction = Transaction::create([
             "user_id" => $request->user()->id,
-            "fecha" => $request->fecha,
+            "fecha" => $fecha,
             "monto" => $request->monto,
         ]);
 
